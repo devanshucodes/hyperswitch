@@ -9,12 +9,12 @@
 <body>
     <div class="container">
         <header>
-            <h1>🔄 Hyperswitch Payment Demo</h1>
+            <h1>💳 Hyperswitch Payment Demo</h1>
             <p>Juspay Assignment - Complete Payment Flow Implementation</p>
         </header>
 
-        <main>
-            <div class="payment-section">
+        <main class="fade-in-up">
+            <div class="payment-section slide-in">
                 <h2>Payment Details</h2>
                 <div class="payment-info">
                     <div class="amount-input-section">
@@ -90,10 +90,13 @@
                     </div>
                     
                     <div id="unified-checkout">
-                        <!-- Hyperswitch SDK will inject the payment widget here -->
+                        <!-- Payment form will be loaded here -->
                         <div class="loading-placeholder">
                             <div class="spinner"></div>
                             <p>Loading payment form...</p>
+                            <button id="manual-load-btn" onclick="window.paymentFlow?.showFallbackForm()" style="margin-top: 16px; padding: 8px 16px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem;">
+                                Load Form Manually
+                            </button>
                         </div>
                     </div>
                     
@@ -106,7 +109,7 @@
                 </form>
             </div>
 
-            <div class="info-section">
+            <div class="info-section slide-in">
                 <h3>Payment Flow Steps</h3>
                 <div class="steps">
                     <div class="step" id="step-1">
@@ -133,7 +136,7 @@
                 </div>
             </div>
 
-            <div class="test-cards">
+            <div class="test-cards slide-in">
                 <h3>🧪 Hyperswitch Test Card Details</h3>
                 <div class="test-card-notice">
                     <p><strong>⚠️ Important:</strong> Use these test cards for successful payments</p>
