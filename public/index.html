@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperswitch Payment Demo - Juspay Assignment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💳 Hyperswitch Payment Demo</h1>
+            <p>Juspay Assignment - Complete Payment Flow Implementation</p>
+        </header>
+
+        <main class="fade-in-up">
+            <div class="payment-section slide-in">
+                <h2>Payment Details</h2>
+                <div class="payment-info">
+                    <div class="amount-input-section">
+                        <label for="amount-input">Payment Amount:</label>
+                        <div class="amount-input-container">
+                            <span class="currency-symbol">$</span>
+                            <input 
+                                type="number" 
+                                id="amount-input" 
+                                value="100.00" 
+                                min="0.01" 
+                                max="999999.99" 
+                                step="0.01"
+                                placeholder="0.00"
+                            >
+                            <select id="currency-select">
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                                <option value="GBP">GBP</option>
+                                <option value="INR">INR</option>
+                            </select>
+                        </div>
+                        <p class="description">Enter the amount you want to pay</p>
+                    </div>
+                    <div class="amount-display" id="amount-display">
+                        <span class="currency">$</span>
+                        <span class="amount">100.00</span>
+                        <span class="currency-code">USD</span>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <form id="payment-form">
+                    <div class="payment-details-section">
+                        <h3>Payment Details</h3>
+                        <div class="card-input-section">
+                            <div class="input-group">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                            </div>
+                            
+                            <div class="input-row">
+                                <div class="input-group">
+                                    <label for="expiry">Expiry Date</label>
+                                    <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+                                </div>
+                                <div class="input-group">
+                                    <label for="cvc">CVC</label>
+                                    <input type="text" id="cvc" placeholder="123" maxlength="4">
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label for="cardholder-name">Cardholder Name</label>
+                                <input type="text" id="cardholder-name" placeholder="John Doe">
+                            </div>
+                        </div>
+                        
+                        <div class="quick-fill-section">
+                            <p><strong>Quick Fill Test Cards:</strong></p>
+                            <div class="quick-fill-buttons">
+                                <button type="button" class="quick-fill-btn" data-card="4242424242424242" data-expiry="12/25" data-cvc="123" data-name="John Doe">
+                                    ✅ Visa Success
+                                </button>
+                                <button type="button" class="quick-fill-btn" data-card="5555555555554444" data-expiry="12/25" data-cvc="123" data-name="John Doe">
+                                    ✅ Mastercard Success
+                                </button>
+                                <button type="button" class="quick-fill-btn" data-card="4000000000000002" data-expiry="12/25" data-cvc="123" data-name="John Doe">
+                                    ❌ Test Decline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="unified-checkout">
+                        <!-- Payment form will be loaded here -->
+                        <div class="loading-placeholder">
+                            <div class="spinner"></div>
+                            <p>Loading payment form...</p>
+                            <button id="manual-load-btn" onclick="window.paymentFlow?.showFallbackForm()" style="margin-top: 16px; padding: 8px 16px; background: var(--primary-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem;">
+                                Load Form Manually
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submit-btn" disabled>
+                        <div class="spinner hidden" id="spinner"></div>
+                        <span id="button-text">Pay <span id="button-amount">$100.00</span></span>
+                    </button>
+                    
+                    <div id="payment-message" class="hidden"></div>
+                </form>
+            </div>
+
+            <div class="info-section slide-in">
+                <h3>Payment Flow Steps</h3>
+                <div class="steps">
+                    <div class="step" id="step-1">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Create Payment Intent</h4>
+                            <p>Initialize payment with amount and currency</p>
+                        </div>
+                    </div>
+                    <div class="step" id="step-2">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Collect Payment Method</h4>
+                            <p>Enter card details using Hyperswitch widget</p>
+                        </div>
+                    </div>
+                    <div class="step" id="step-3">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Confirm Payment</h4>
+                            <p>Process and confirm the payment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-cards slide-in">
+                <h3>🧪 Hyperswitch Test Card Details</h3>
+                <div class="test-card-notice">
+                    <p><strong>⚠️ Important:</strong> Use these test cards for successful payments</p>
+                </div>
+                <div class="card-info">
+                    <div class="card">
+                        <strong>✅ Visa Test Card (Success)</strong>
+                        <p><code>4242 4242 4242 4242</code></p>
+                        <p>Expiry: 12/25, CVC: 123</p>
+                        <p>This card will always succeed</p>
+                    </div>
+                    <div class="card">
+                        <strong>❌ Visa Test Card (Decline)</strong>
+                        <p><code>4000 0000 0000 0002</code></p>
+                        <p>Expiry: 12/25, CVC: 123</p>
+                        <p>This card will always be declined</p>
+                    </div>
+                    <div class="card">
+                        <strong>✅ Mastercard Test Card</strong>
+                        <p><code>5555 5555 5555 4444</code></p>
+                        <p>Expiry: 12/25, CVC: 123</p>
+                        <p>This card will always succeed</p>
+                    </div>
+                    <div class="card">
+                        <strong>🔒 American Express Test</strong>
+                        <p><code>3782 822463 10005</code></p>
+                        <p>Expiry: 12/25, CVC: 1234</p>
+                        <p>This card will always succeed</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Built for Juspay Assignment - Hyperswitch Integration Demo</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
