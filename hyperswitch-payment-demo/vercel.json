@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "src/server.js"
+    },
+    {
+      "src": "/create-payment",
+      "dest": "src/server.js"
+    },
+    {
+      "src": "/confirm-payment",
+      "dest": "src/server.js"
+    },
+    {
+      "src": "/verify-payment/(.*)",
+      "dest": "src/server.js"
+    },
+    {
+      "src": "/health",
+      "dest": "src/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

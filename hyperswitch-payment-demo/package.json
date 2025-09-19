@@ -6,7 +6,12 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node src/server.js",
+    "build": "echo 'No build step required'",
+    "vercel-build": "echo 'No build step required'",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "keywords": ["hyperswitch", "payment", "juspay", "demo"],
   "author": "",
